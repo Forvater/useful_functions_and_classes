@@ -3,12 +3,12 @@
 
 unsigned long __stdcall ThreadProc(void* p_param);
 
-void simple_timer(unsigned int time_to_elapse,
-                  bool (*conditional_proc)(),
-                  void (*callback_proc)()) {
+void SetSimpleTimer(unsigned int time_to_elapse,
+                    bool (*conditional_proc)(),
+                    void (*callback_proc)()) {
   unsigned long tread_id = 0;
   HANDLE thread_handle = NULL;
-  timer_params* params = new timer_params; // non-global for use of multiple timers
+  TimerParams* params = new TimerParams; // non-global for use of multiple timers
   params->time_to_elapse = time_to_elapse;
   params->conditional_proc = conditional_proc;
   params->callback_proc = callback_proc;
@@ -17,7 +17,7 @@ void simple_timer(unsigned int time_to_elapse,
 
 unsigned long __stdcall ThreadProc(void* p_param) {
   MSG Msg;
-  timer_params* pars = (timer_params*) p_param;
+  TimerParams* pars = (TimerParams*) p_param;
   unsigned int TimerId = SetTimer(NULL, 0, pars->time_to_elapse, NULL/*&TimerProc*/);
   while (GetMessage(&Msg, NULL, 0, 0)) {
     if (Msg.message == WM_TIMER) {

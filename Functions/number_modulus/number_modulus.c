@@ -5,4 +5,4 @@ unsigned int Abs(int a) {
   } else {
     return (~a + 1);
   }
-}модуль
+}
